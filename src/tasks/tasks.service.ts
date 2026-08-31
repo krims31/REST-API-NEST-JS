@@ -24,6 +24,10 @@ export class TasksService {
     return this.tasks;
   }
 
+  findByStatus(isStatus: boolean): Task[] {
+    return this.tasks.filter((task) => task.status === isStatus);
+  }
+
   findOne(id: number) {
     return this.findTaskById(id);
   }

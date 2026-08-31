@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateTaskDto } from '../dto/create-task.dto';
 import { UpdateTaskDto } from '../dto/update-task.dto';
@@ -22,7 +23,11 @@ export class TasksController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Query('status') status?: string) {
+    if (status !== undefined) {
+      const isStatus = status === 'true';
+      return this.tasksService.findByStatus(isStatus);
+    }
     return this.tasksService.findAll();
   }
 
