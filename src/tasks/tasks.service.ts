@@ -41,6 +41,12 @@ export class TasksService {
     return this.tasks[index];
   }
 
+  updateStatus(id: number, status: boolean): Task {
+    const task = this.findTaskById(id);
+    task.status = status;
+    return task;
+  }
+
   remove(id: number): void {
     this.findTaskById(id);
     this.tasks = this.tasks.filter((task) => task.id !== id);
