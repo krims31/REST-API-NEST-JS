@@ -28,6 +28,14 @@ export class TasksService {
     return this.tasks.filter((task) => task.status === isStatus);
   }
 
+  search(query: string): Task[] {
+    return this.tasks.filter(
+      (task) =>
+        task.title.toLowerCase().includes(query.toLowerCase()) ||
+        task.description?.toLowerCase().includes(query.toLowerCase()),
+    );
+  }
+
   findOne(id: number) {
     return this.findTaskById(id);
   }

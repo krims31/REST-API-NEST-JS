@@ -23,7 +23,10 @@ export class TasksController {
   }
 
   @Get()
-  findAll(@Query('status') status?: string) {
+  findAll(@Query('search') search?: string, @Query('status') status?: string) {
+    if (search) {
+      return this.tasksService.search(search);
+    }
     if (status !== undefined) {
       const isStatus = status === 'true';
       return this.tasksService.findByStatus(isStatus);
