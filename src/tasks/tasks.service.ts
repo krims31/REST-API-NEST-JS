@@ -36,8 +36,35 @@ export class TasksService {
     );
   }
 
+  complete(id: number) {
+    const task = this.findTaskById(id);
+    task.status = true;
+    return task;
+  }
+
+  incomplete(id: number) {
+    const task = this.findTaskById(id);
+    task.status = false;
+    return task;
+  }
+
   findOne(id: number) {
     return this.findTaskById(id);
+  }
+
+  statistic() {
+    const total = this.tasks.length;
+    const completed = this.tasks.filter((task) => task.status).length;
+
+    const pending = total - completed;
+
+    return {
+      total,
+      completed,
+      pending,
+      completedRate:
+        total > 0 ? ((completed / total) * 100).toFixed(2) + '%' : '0%',
+    };
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto): Task {
@@ -62,6 +89,21 @@ export class TasksService {
   remove(id: number): void {
     this.findTaskById(id);
     this.tasks = this.tasks.filter((task) => task.id !== id);
+  }
+
+  removeMany(ids: number[]): { deleted: number } {
+    let deleted = 0;
+
+    ids.forEach((id) => {
+      try {
+        this.findTaskById(id);
+        this.tasks = this.tasks.filter((task) => task.id !== id);
+        deleted++;
+      } catch (error) {
+        console.error('Remove many not a task', error);
+      }
+    });
+    return { deleted };
   }
 
   private findTaskById(id: number) {

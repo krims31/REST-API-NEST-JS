@@ -22,6 +22,12 @@ export class TasksController {
     return this.tasksService.create(createTaskDto);
   }
 
+  // ✅ Статические маршруты
+  @Get('stats')
+  statistic() {
+    return this.tasksService.statistic();
+  }
+
   @Get()
   findAll(@Query('search') search?: string, @Query('status') status?: string) {
     if (search) {
@@ -34,6 +40,7 @@ export class TasksController {
     return this.tasksService.findAll();
   }
 
+  // ✅ Динамические маршруты
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.tasksService.findOne(id);
@@ -47,9 +54,27 @@ export class TasksController {
     return this.tasksService.update(id, updateTaskDto);
   }
 
+  @Patch(':id/complete')
+  complete(@Param('id', ParseIntPipe) id: number) {
+    return this.tasksService.complete(id);
+  }
+
+  @Patch(':id/incomplete')
+  incomplete(@Param('id', ParseIntPipe) id: number) {
+    return this.tasksService.incomplete(id);
+  }
+
   @Patch(':id/status')
-  updateStatus(@Param('id', ParseIntPipe) id: number, @Body() status: boolean) {
+  updateStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('status') status: boolean,
+  ) {
     return this.tasksService.updateStatus(id, status);
+  }
+
+  @Delete('bulk')
+  removeMany(@Body('ids') ids: number[]) {
+    return this.tasksService.removeMany(ids);
   }
 
   @Delete(':id')
