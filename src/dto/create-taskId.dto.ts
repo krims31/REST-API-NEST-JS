@@ -3,17 +3,17 @@ import { IsBoolean, IsDate, IsNumber, IsString } from 'class-validator';
 export class CreateTaskIdDto {
   @IsNumber()
   @IsString()
-  id: number | string;
+  id!: number | string;
 
   @IsString()
-  title: string;
+  title!: string;
 
   @IsString()
-  description: string;
+  description!: string;
 
   @IsBoolean()
-  status: boolean;
+  status!: boolean;
 
   @IsDate()
-  createdAt: Date;
+  createdAt!: Date;
 }
