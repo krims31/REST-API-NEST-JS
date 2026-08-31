@@ -72,11 +72,13 @@ export class TasksController {
     return this.tasksService.updateStatus(id, status);
   }
 
+  // ✅ Статические маршруты
   @Delete('bulk')
   removeMany(@Body('ids') ids: number[]) {
     return this.tasksService.removeMany(ids);
   }
 
+  // ✅ Динамические маршруты
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.tasksService.remove(id);
