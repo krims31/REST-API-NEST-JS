@@ -91,6 +91,12 @@ export class TasksService {
     this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 
+  pagination(page: number, limit: number) {
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    return this.tasks.slice(startIndex, endIndex);
+  }
+
   removeMany(ids: number[]): { deleted: number } {
     let deleted = 0;
 
