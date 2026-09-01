@@ -107,6 +107,18 @@ export class TasksService {
     };
   }
 
+  sort(sort: string) {
+    this.tasks.sort((a, b) => {
+      if (sort === 'asc') {
+        return a.title.localeCompare(b.title);
+      } else {
+        return b.title.localeCompare(a.title);
+      }
+    });
+
+    return this.tasks;
+  }
+
   removeMany(ids: number[]): { deleted: number } {
     let deleted = 0;
 

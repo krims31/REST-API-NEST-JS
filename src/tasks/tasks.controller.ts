@@ -10,7 +10,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreateTaskDto } from '../dto/create-task.dto';
-import { PaginationDto } from '../dto/pagination.dto';
 import { UpdateTaskDto } from '../dto/update-task.dto';
 import { TasksService } from './tasks.service';
 
@@ -31,24 +30,29 @@ export class TasksController {
 
   @Get()
   findAll(
-    @Query('pagination') paginationDto: PaginationDto,
-    page: number,
-    limit: number,
     @Query('search') search?: string,
     @Query('status') status?: string,
+    @Query('sort') sort?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
   ) {
-    if (search) {
-      return this.tasksService.search(search);
-    }
-
-    if (paginationDto) {
-      return this.tasksService.pagination(page, limit);
-    }
-
     if (status !== undefined) {
       const isStatus = status === 'true';
       return this.tasksService.findByStatus(isStatus);
     }
+
+    if (search) {
+      return this.tasksService.search(search);
+    }
+
+    if (sort) {
+      return this.tasksService.sort(sort);
+    }
+
+    if (page && limit) {
+      return this.tasksService.pagination(page, limit);
+    }
+
     return this.tasksService.findAll();
   }
 
