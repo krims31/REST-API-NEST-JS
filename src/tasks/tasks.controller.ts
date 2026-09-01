@@ -40,6 +40,11 @@ export class TasksController {
     if (search) {
       return this.tasksService.search(search);
     }
+
+    if (paginationDto) {
+      return this.tasksService.pagination(page, limit);
+    }
+
     if (status !== undefined) {
       const isStatus = status === 'true';
       return this.tasksService.findByStatus(isStatus);
