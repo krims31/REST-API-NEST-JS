@@ -9,6 +9,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 import { CreateTaskDto } from '../dto/create-task.dto';
 import { UpdateTaskDto } from '../dto/update-task.dto';
 import { TasksService } from './tasks.service';
@@ -21,6 +22,8 @@ export class TasksController {
   create(@Body() createTaskDto: CreateTaskDto) {
     return this.tasksService.create(createTaskDto);
   }
+
+  @ApiOperation({ summary: 'Get task statistics' })
 
   // ✅ Статические маршруты
   @Get('stats')
