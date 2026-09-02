@@ -9,7 +9,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
+import * as Swagger from '@nestjs/swagger';
 import { CreateTaskDto } from '../dto/create-task.dto';
 import { UpdateTaskDto } from '../dto/update-task.dto';
 import { TasksService } from './tasks.service';
@@ -23,10 +23,9 @@ export class TasksController {
     return this.tasksService.create(createTaskDto);
   }
 
-  @ApiOperation({ summary: 'Get task statistics' })
-
   // ✅ Статические маршруты
   @Get('stats')
+  @Swagger.ApiOperation({ summary: 'Get task statistics' })
   statistic() {
     return this.tasksService.statistic();
   }
